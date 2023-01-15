@@ -16,7 +16,7 @@ from markdown.preprocessors import Preprocessor
 import re
 import string
 
-from secrets import token_hex
+from secrets import choice
 
 def strip_notprintable(myStr):
     return ''.join(filter(lambda x: x in string.printable, myStr))
@@ -52,7 +52,8 @@ class MermaidPreprocessor(Preprocessor):
                 if not is_mermaid:
                     is_mermaid = True
                     #new_lines.append('<style type="text/css"> @import url("https://cdn.rawgit.com/knsv/mermaid/0.5.8/dist/mermaid.css"); </style>')
-                new_lines.append(f'<div class="mermaid" id="{token_hex(16)}">')
+                unique_id = ''.join(choice(string.ascii_letters) for i in range(16))
+                new_lines.append(f'<div class="mermaid" id="{unique_id}">')
                 m_start = None
             elif m_end:
                 new_lines.append('</div>')
