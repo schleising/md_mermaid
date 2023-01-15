@@ -38,7 +38,7 @@ class MermaidPreprocessor(Preprocessor):
             if not in_mermaid_code:
                 m_start = MermaidRegex.match(line)
             else:
-                m_end = re.match(r"^["+mermaid_sign+"]{3}[\ \t]*$", line)
+                m_end = re.match(r"^["+mermaid_sign+"]{3}[\ \t]*$", line) # type: ignore
                 if m_end:
                     in_mermaid_code = False
 
@@ -67,17 +67,17 @@ class MermaidPreprocessor(Preprocessor):
             new_lines.append('')
             # This will initialize mermaid renderer. It's done only when the HTML document is ready,
             # to ensure the loading of mermaid.js file is finished.
-            new_lines.append('''<script>
-                    function initializeMermaid() {
-                        mermaid.initialize({startOnLoad:true})
-                    }
+            # new_lines.append('''<script>
+            #         function initializeMermaid() {
+            #             mermaid.initialize({startOnLoad:true})
+            #         }
             
-                    if (document.readyState === "complete" || document.readyState === "interactive") {
-                        setTimeout(initializeMermaid, 1);
-                    } else {
-                        document.addEventListener("DOMContentLoaded", initializeMermaid);
-                    }
-            </script>''')
+            #         if (document.readyState === "complete" || document.readyState === "interactive") {
+            #             setTimeout(initializeMermaid, 1);
+            #         } else {
+            #             document.addEventListener("DOMContentLoaded", initializeMermaid);
+            #         }
+            # </script>''')
 
         return new_lines
 
@@ -85,7 +85,7 @@ class MermaidPreprocessor(Preprocessor):
 class MermaidExtension(Extension):
     """ Add source code hilighting to markdown codeblocks. """
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Add HilitePostprocessor to Markdown instance. """
         # Insert a preprocessor before ReferencePreprocessor
         md.preprocessors.register(MermaidPreprocessor(md), 'mermaid', 35)
