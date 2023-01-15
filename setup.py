@@ -12,7 +12,7 @@ setup(
     description='Python-Markdown extension to add support for mermaid graph inside markdown file.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/oruelle/md_mermaid',
+    # url='https://github.com/oruelle/md_mermaid',
     py_modules=['md_mermaid'],
     install_requires = ['markdown>=2.5'],
     packages=find_packages(),
